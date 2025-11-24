@@ -22,7 +22,7 @@
         <h2 id="question-text"></h2>
 
         <!-- Grid de imágenes -->
-        <div class="images-grid mt-4"></div>
+        <div class="images-grid mt-4 d-grid gap-2" style="grid-template-columns: repeat(2, 1fr);"></div>
 
         <!-- Botones de opciones -->
         <div class="options-grid mt-4 d-grid gap-2"></div>
@@ -32,6 +32,7 @@
     <div id="result-container" class="d-none text-center mt-5">
       <h2>Tu casa es:</h2>
       <p id="result-house" class="fs-2 fw-bold"></p>
+      <img id="house-image" class="img-fluid rounded mt-3" style="max-width:300px;" /><br>
       <button id="restart-btn" class="btn btn-outline-light mt-3">Volver a empezar</button>
     </div>
 

@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const quizContainer = document.getElementById('quiz-container');
   const resultContainer = document.getElementById('result-container');
   const resultHouse = document.getElementById('result-house');
+  const houseImage = document.getElementById("house-image");
 
   const questionText = document.getElementById("question-text");
   const imagesGrid = document.querySelector(".images-grid");
@@ -70,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { text: "Espino", house: "Ravenclaw" }
       ]
     },
-     {
+    {
       question: "¿A qué preferirías enfrentarte?",
       images: ["troll.gif", "dementor.gif", "sirena.gif", "dragon.gif"],
       options: [
@@ -142,6 +143,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
     resultHouse.textContent = winnerHouse;
+
+    // Mostrar imagen de la casa
+    houseImage.src = "imagenes/casas/" + winnerHouse.toLowerCase() + ".jpg";
+    houseImage.alt = winnerHouse;
   }
 
   startBtn.addEventListener('click', () => {
@@ -153,7 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById("restart-btn").addEventListener("click", () => {
     currentQuestion = 0;
     for (let h in score) score[h] = 0;
-
     resultContainer.classList.add("d-none");
     startContainer.classList.remove("d-none");
   });
