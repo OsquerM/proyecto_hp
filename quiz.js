@@ -4,8 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const quizContainer = document.getElementById('quiz-container');
   const resultContainer = document.getElementById('result-container');
   const resultHouse = document.getElementById('result-house');
-  const houseImage = document.getElementById("house-image");
-
   const questionText = document.getElementById("question-text");
   const imagesGrid = document.querySelector(".images-grid");
   const optionsGrid = document.querySelector(".options-grid");
@@ -100,7 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const q = questions[currentQuestion];
     questionText.textContent = q.question;
 
-    // Mostrar imágenes
     imagesGrid.innerHTML = "";
     q.images.forEach(src => {
       const img = document.createElement("img");
@@ -109,7 +106,6 @@ document.addEventListener('DOMContentLoaded', () => {
       imagesGrid.appendChild(img);
     });
 
-    // Mostrar opciones
     optionsGrid.innerHTML = "";
     q.options.forEach(opt => {
       const btn = document.createElement("button");
@@ -142,11 +138,31 @@ document.addEventListener('DOMContentLoaded', () => {
         winnerHouse = house;
       }
     }
+
     resultHouse.textContent = winnerHouse;
 
-    // Mostrar imagen de la casa
+    // Imagen de la casa
+    const existingImg = document.getElementById("house-img");
+    if (existingImg) existingImg.remove();
+    const houseImage = document.createElement("img");
     houseImage.src = "imagenes/casas/" + winnerHouse.toLowerCase() + ".jpg";
     houseImage.alt = winnerHouse;
+    houseImage.id = "house-img";
+    houseImage.classList.add("img-fluid", "mt-3");
+    resultContainer.appendChild(houseImage);
+
+    // Enviar resultado al backend
+    const usernameInput = document.getElementById("username");
+    const username = usernameInput ? usernameInput.value || "Anonimo" : "Anonimo";
+
+    fetch("http://127.0.0.1:8000/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username: username, house: winnerHouse })
+    })
+    .then(res => res.json())
+    .then(data => console.log("Resultado enviado:", data))
+    .catch(err => console.error("Error enviando resultado:", err));
   }
 
   startBtn.addEventListener('click', () => {
