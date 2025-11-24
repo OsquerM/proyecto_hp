@@ -1,0 +1,80 @@
+/* styles.css */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#quiz-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+#question {
+  font-size: 1.5rem;
+}
+
+#answers button {
+  background-color: #343a40;
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  text-align: left;
+}
+
+#answers button:hover {
+  background-color: #495057;
+}
+
+#next-btn {
+  width: 100%;
+}
+
+#result-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.images-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.images-grid img {
+  width: 100%;
+  height: 200px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.options-grid button {
+  width: 100%;
+}
+
+
+.options-grid button {
+  width: 100%;
+}
+
+.answers-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.answer-card {
+  text-align: center;
+}
+
+.answer-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.answer-card button {
+  width: 100%;
+}
