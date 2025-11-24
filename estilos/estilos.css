@@ -1,6 +1,20 @@
 /* styles.css */
+/* Fondo GIF para toda la pantalla */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100vh; /* Altura total de la pantalla */
+  background: url('../imagenes/marauders-map-harry-potter.gif') no-repeat center center fixed;
+  background-size: cover; /* Hace que el GIF cubra toda la pantalla */
+  color: white; /* Para que el texto se vea sobre el fondo */
+  font-family: Arial, sans-serif;
+}
+
+/* Asegura que los contenedores tengan fondo semi-transparente para que se lea el texto */
+.container {
+  background: rgba(0, 0, 0, 0.6); /* Negro semitransparente */
+  padding: 30px;
+  border-radius: 10px;
 }
 
 #quiz-container {
