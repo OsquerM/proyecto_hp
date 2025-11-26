@@ -1,87 +1,51 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel Admin - Hogwarts Quiz</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../frontend/estilos/estilos.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel Admin - Hogwarts Quiz</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/frontend/estilos/estilos.css">
+<script src="/frontend/panel.js" defer></script>
 </head>
 <body class="bg-dark text-light">
-  <div class="container py-5">
+<div class="container py-5">
+<h1 class="text-center mb-4">Panel de Administración</h1>
 
-    <h1 class="text-center mb-4">Panel de Administración</h1>
+<!-- Añadir pregunta -->
+<div class="mb-4">
+  <form id="form-pregunta">
+    <input type="text" id="texto-pregunta" class="form-control mb-2" placeholder="Texto de la pregunta" required>
+    <input type="text" id="opcion1-texto" class="form-control mb-1" placeholder="Opción 1" required>
+    <input type="text" id="opcion1-casa" class="form-control mb-1" placeholder="Casa" required>
+    <input type="text" id="opcion2-texto" class="form-control mb-1" placeholder="Opción 2" required>
+    <input type="text" id="opcion2-casa" class="form-control mb-1" placeholder="Casa" required>
+    <input type="text" id="opcion3-texto" class="form-control mb-1" placeholder="Opción 3" required>
+    <input type="text" id="opcion3-casa" class="form-control mb-1" placeholder="Casa" required>
+    <input type="text" id="opcion4-texto" class="form-control mb-1" placeholder="Opción 4" required>
+    <input type="text" id="opcion4-casa" class="form-control mb-1" placeholder="Casa" required>
+    <input type="text" id="imagen1" class="form-control mb-1" placeholder="Imagen 1" required>
+    <input type="text" id="imagen2" class="form-control mb-1" placeholder="Imagen 2" required>
+    <input type="text" id="imagen3" class="form-control mb-1" placeholder="Imagen 3" required>
+    <input type="text" id="imagen4" class="form-control mb-1" placeholder="Imagen 4" required>
+    <button type="submit" class="btn btn-success mt-2">Añadir Pregunta</button>
+  </form>
+  <p id="mensaje-pregunta" class="text-success mt-2 d-none">Pregunta añadida correctamente!</p>
+</div>
 
-    <!-- Subir imagen -->
-    <div class="mb-4">
-      <h3>Subir Imagen</h3>
-      <form id="form-subir-imagen">
-        <input type="file" id="imagen-file" class="form-control mb-2" required>
-        <button type="submit" class="btn btn-primary">Subir Imagen</button>
-      </form>
-      <p id="mensaje-imagen" class="text-success mt-2 d-none"></p>
-    </div>
-
-    <!-- Añadir pregunta -->
-    <div class="mb-4">
-      <h3>Añadir Pregunta</h3>
-      <form id="form-pregunta">
-        <div class="mb-2">
-          <input type="text" id="texto-pregunta" class="form-control" placeholder="Texto de la pregunta" required>
-        </div>
-
-        <div class="mb-2 row">
-          <div class="col-6 mb-2">
-            <input type="text" class="form-control mb-1" placeholder="Opción 1" id="opcion1-texto" required>
-            <input type="text" class="form-control" placeholder="Casa" id="opcion1-casa" required>
-          </div>
-          <div class="col-6 mb-2">
-            <input type="text" class="form-control mb-1" placeholder="Opción 2" id="opcion2-texto" required>
-            <input type="text" class="form-control" placeholder="Casa" id="opcion2-casa" required>
-          </div>
-          <div class="col-6 mb-2">
-            <input type="text" class="form-control mb-1" placeholder="Opción 3" id="opcion3-texto" required>
-            <input type="text" class="form-control" placeholder="Casa" id="opcion3-casa" required>
-          </div>
-          <div class="col-6 mb-2">
-            <input type="text" class="form-control mb-1" placeholder="Opción 4" id="opcion4-texto" required>
-            <input type="text" class="form-control" placeholder="Casa" id="opcion4-casa" required>
-          </div>
-        </div>
-
-        <div class="mb-2">
-          <input type="text" class="form-control mb-1" placeholder="Imagen 1" id="imagen1" required>
-          <input type="text" class="form-control mb-1" placeholder="Imagen 2" id="imagen2" required>
-          <input type="text" class="form-control mb-1" placeholder="Imagen 3" id="imagen3" required>
-          <input type="text" class="form-control mb-1" placeholder="Imagen 4" id="imagen4" required>
-        </div>
-
-        <button type="submit" class="btn btn-success">Añadir Pregunta</button>
-      </form>
-      <p id="mensaje-pregunta" class="text-success mt-2 d-none">Pregunta añadida correctamente!</p>
-    </div>
-
-    <!-- Lista de preguntas -->
-    <div>
-      <h3>Preguntas Existentes</h3>
-      <table class="table table-dark table-striped" id="tabla-preguntas">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Pregunta</th>
-            <th>Opciones</th>
-            <th>Imágenes</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Aquí se cargarán las preguntas con JS -->
-        </tbody>
-      </table>
-    </div>
-
-  </div>
-
-  <script src="../frontend/panel.js"></script>
+<!-- Tabla de preguntas -->
+<table class="table table-dark table-striped" id="tabla-preguntas">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Pregunta</th>
+      <th>Opciones</th>
+      <th>Imágenes</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+</div>
 </body>
 </html>

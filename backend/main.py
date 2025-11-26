@@ -1,32 +1,18 @@
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
-from fastapi.middleware.cors import CORSMiddleware
-import json, os, shutil
+import json, os
 
 app = FastAPI()
 
-# Configuración CORS
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"], 
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-# Montar carpeta estática para CSS, JS, imágenes
-app.mount("/static", StaticFiles(directory="static"), name="static")
+# Servir todo el frontend desde la carpeta 'frontend'
+app.mount("/frontend", StaticFiles(directory="frontend"), name="frontend")
 
 # Archivos JSON
-RESULTS_FILE = "results.json"
-QUESTIONS_FILE = "questions.json"
-
+QUESTIONS_FILE = "backend/questions.json"
+RESULTS_FILE = "backend/results.json"
 # Modelos
-class QuizResult(BaseModel):
-    username: str
-    house: str
-
 class Option(BaseModel):
     text: str
     house: str
@@ -36,30 +22,6 @@ class Question(BaseModel):
     options: list[Option]
     images: list[str]
 
-# Endpoints resultados quiz
-@app.post("/submit")
-async def submit_result(result: QuizResult):
-    if os.path.exists(RESULTS_FILE):
-        with open(RESULTS_FILE, "r") as f:
-            results = json.load(f)
-    else:
-        results = []
-
-    results.append(result.dict())
-    with open(RESULTS_FILE, "w") as f:
-        json.dump(results, f, indent=4)
-    return {"message": "Resultado guardado correctamente"}
-
-@app.get("/results")
-async def get_results():
-    if os.path.exists(RESULTS_FILE):
-        with open(RESULTS_FILE, "r") as f:
-            results = json.load(f)
-    else:
-        results = []
-    return results
-
-
 class LoginData(BaseModel):
     user: str
     password: str
@@ -67,19 +29,21 @@ class LoginData(BaseModel):
 ADMIN_USER = "admin"
 ADMIN_PASS = "1234"
 
+# Rutas HTML
+@app.get("/")
+async def login_page():
+    return FileResponse("frontend/login.html")
+
+@app.get("/panel")
+async def panel_page():
+    return FileResponse("frontend/panel.html")
+
+# Login
 @app.post("/login")
 async def login(data: LoginData):
     if data.user == ADMIN_USER and data.password == ADMIN_PASS:
         return {"success": True}
     return JSONResponse(status_code=401, content={"success": False, "message": "Usuario o contraseña incorrectos"})
-# Subir imagenes
-@app.post("/upload-image")
-async def upload_image(file: UploadFile = File(...)):
-    os.makedirs("static/imagenes", exist_ok=True)
-    path = f"static/imagenes/{file.filename}"
-    with open(path, "wb") as f:
-        shutil.copyfileobj(file.file, f)
-    return {"filename": file.filename}
 
 # Añadir pregunta
 @app.post("/add-question")
@@ -105,7 +69,7 @@ async def get_questions():
         questions = []
     return questions
 
-# Borrar pregunta por índice
+# Borrar pregunta
 @app.delete("/questions/{index}")
 async def delete_question(index: int):
     if os.path.exists(QUESTIONS_FILE):

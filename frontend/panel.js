@@ -1,5 +1,4 @@
-// Ejemplo de añadir pregunta
-document.getElementById("form-pregunta").addEventListener("submit", (e) => {
+document.getElementById("form-pregunta").addEventListener("submit", async e => {
   e.preventDefault();
   const nuevaPregunta = {
     question: document.getElementById("texto-pregunta").value,
@@ -17,15 +16,42 @@ document.getElementById("form-pregunta").addEventListener("submit", (e) => {
     ]
   };
 
-  fetch("http://127.0.0.1:8000/add-question", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(nuevaPregunta)
-  })
-  .then(res => res.json())
-  .then(data => {
-    document.getElementById("mensaje-exito").classList.remove("d-none");
+  try {
+    await fetch("/add-question", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(nuevaPregunta)
+    });
+    document.getElementById("mensaje-pregunta").classList.remove("d-none");
     document.getElementById("form-pregunta").reset();
-  })
-  .catch(err => console.error("Error añadiendo pregunta:", err));
+    cargarPreguntas();
+  } catch (err) {
+    console.error(err);
+  }
 });
+
+async function cargarPreguntas() {
+  const res = await fetch("/questions");
+  const questions = await res.json();
+  const tbody = document.getElementById("tabla-preguntas").querySelector("tbody");
+  tbody.innerHTML = "";
+  questions.forEach((q, i) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${i}</td>
+      <td>${q.question}</td>
+      <td>${q.options.map(o => `${o.text} (${o.house})`).join("<br>")}</td>
+      <td>${q.images.join("<br>")}</td>
+      <td><button class="btn btn-danger btn-sm" onclick="borrarPregunta(${i})">Borrar</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+async function borrarPregunta(index) {
+  await fetch(`/questions/${index}`, { method: "DELETE" });
+  cargarPreguntas();
+}
+
+// Inicializa al cargar
+cargarPreguntas();
