@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
+from fastapi import UploadFile, File
 import json, os
 
 app = FastAPI()
@@ -12,6 +13,9 @@ app.mount("/frontend", StaticFiles(directory="frontend"), name="frontend")
 # Archivos JSON
 QUESTIONS_FILE = "backend/questions.json"
 RESULTS_FILE = "backend/results.json"
+
+IMAGES_DIR = "frontend/imagenes"
+os.makedirs(IMAGES_DIR, exist_ok=True)
 # Modelos
 class Option(BaseModel):
     text: str
@@ -102,3 +106,12 @@ async def delete_question(index: int):
                 json.dump(questions, f, indent=4)
             return {"message": "Pregunta borrada correctamente"}
     return JSONResponse(status_code=404, content={"message": "Pregunta no encontrada"})
+
+
+# Endpoint para subir imagen
+@app.post("/upload-image")
+async def upload_image(file: UploadFile = File(...)):
+    file_path = os.path.join(IMAGES_DIR, file.filename)
+    with open(file_path, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+    return {"filename": file.filename}

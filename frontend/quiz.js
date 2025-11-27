@@ -8,10 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const imagesGrid = document.querySelector(".images-grid");
   const optionsGrid = document.querySelector(".options-grid");
 
+  // Tus preguntas ya definidas
   const questions = [
     {
       question: "¿Qué animal te llevarías a Hogwarts?",
-      images: ["rata.jpg", "lechuza.jpg", "escarbato.jpg", "gato.jpg"],
+      images: ["/frontend/imagenes/rata.jpg", "/frontend/imagenes/lechuza.jpg", "/frontend/imagenes/escarbato.jpg", "/frontend/imagenes/gato.jpg"],
       options: [
         { text: "Rata", house: "Slytherin" },
         { text: "Lechuza", house: "Ravenclaw" },
@@ -21,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       question: "¿Qué cualidad valoras más?",
-      images: ["valentia.jpg", "lealtad.jpg", "sabiduria.jpg", "astucia.png"],
+      images: ["/frontend/imagenes/valentia.jpg", "/frontend/imagenes/lealtad.jpg", "/frontend/imagenes/sabiduria.jpg", "/frontend/imagenes/astucia.png"],
       options: [
         { text: "Valentía", house: "Gryffindor" },
         { text: "Lealtad", house: "Hufflepuff" },
@@ -31,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       question: "¿Qué hechizo usarías?",
-      images: ["expelliarmus.gif", "avada.gif", "protego.gif", "immobulus.gif"],
+      images: ["/frontend/imagenes/expelliarmus.gif", "/frontend/imagenes/avada.gif", "/frontend/imagenes/protego.gif", "/frontend/imagenes/immobulus.gif"],
       options: [
         { text: "Expelliarmus", house: "Gryffindor" },
         { text: "Avada Kedavra", house: "Slytherin" },
@@ -41,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       question: "¿Qué objeto utilizarías?",
-      images: ["recordadora.gif", "escoba.gif", "mapa.gif", "gira.gif"],
+      images: ["/frontend/imagenes/recordadora.gif", "/frontend/imagenes/escoba.gif", "/frontend/imagenes/mapa.gif", "/frontend/imagenes/gira.gif"],
       options: [
         { text: "Recordadora", house: "Gryffindor" },
         { text: "Escoba", house: "Slytherin" },
@@ -51,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       question: "¿Qué clase es tu preferida?",
-      images: ["vuelo.gif", "dcao.gif", "herbologia.gif", "pociones.gif"],
+      images: ["/frontend/imagenes/vuelo.gif", "/frontend/imagenes/dcao.gif", "/frontend/imagenes/herbologia.gif", "/frontend/imagenes/pociones.gif"],
       options: [
         { text: "Vuelo", house: "Gryffindor" },
         { text: "Defensa Contra las Artes Oscuras", house: "Slytherin" },
@@ -61,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       question: "¿De qué está hecha tu varita?",
-      images: ["sauco.jpg", "acebo.jpg", "vid.jpg", "draco.jpg"],
+      images: ["/frontend/imagenes/sauco.jpg", "/frontend/imagenes/acebo.jpg", "/frontend/imagenes/vid.jpg", "/frontend/imagenes/draco.jpg"],
       options: [
         { text: "Sauco", house: "Gryffindor" },
         { text: "Acebo", house: "Slytherin" },
@@ -71,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       question: "¿A qué preferirías enfrentarte?",
-      images: ["troll.gif", "dementor.gif", "sirena.gif", "dragon.gif"],
+      images: ["/frontend/imagenes/troll.gif", "/frontend/imagenes/dementor.gif", "/frontend/imagenes/sirena.gif", "/frontend/imagenes/dragon.gif"],
       options: [
         { text: "Troll", house: "Gryffindor" },
         { text: "Dementor", house: "Slytherin" },
@@ -81,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       question: "Elige un transporte mágico",
-      images: ["escoba1.gif", "coche.gif", "red.gif", "aparicion.gif"],
+      images: ["/frontend/imagenes/escoba1.gif", "/frontend/imagenes/coche.gif", "/frontend/imagenes/red.gif", "/frontend/imagenes/aparicion.gif"],
       options: [
         { text: "Escoba", house: "Gryffindor" },
         { text: "Coche Volador", house: "Slytherin" },
@@ -101,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
     imagesGrid.innerHTML = "";
     q.images.forEach(src => {
       const img = document.createElement("img");
-      img.src = "imagenes/" + src;
+      img.src = src; // ruta ya completa
       img.classList.add("img-fluid", "rounded");
       imagesGrid.appendChild(img);
     });
@@ -145,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const existingImg = document.getElementById("house-img");
     if (existingImg) existingImg.remove();
     const houseImage = document.createElement("img");
-    houseImage.src = "imagenes/casas/" + winnerHouse.toLowerCase() + ".jpg";
+    houseImage.src = `/frontend/imagenes/casas/${winnerHouse.toLowerCase()}.jpg`;
     houseImage.alt = winnerHouse;
     houseImage.id = "house-img";
     houseImage.classList.add("img-fluid", "mt-3");
