@@ -1,9 +1,8 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
-from fastapi import UploadFile, File
-import json, os
+import json, os, shutil
 
 app = FastAPI()
 
@@ -16,6 +15,8 @@ RESULTS_FILE = "backend/results.json"
 
 IMAGES_DIR = "frontend/imagenes"
 os.makedirs(IMAGES_DIR, exist_ok=True)
+os.makedirs("backend", exist_ok=True)  # asegurar que la carpeta backend existe
+
 # Modelos
 class Option(BaseModel):
     text: str
@@ -24,12 +25,17 @@ class Option(BaseModel):
 class Question(BaseModel):
     question: str
     options: list[Option]
-    images: list[str]
+    images: list[str]  # nombres de archivos de imagen
 
 class LoginData(BaseModel):
     user: str
     password: str
 
+class Resultado(BaseModel):
+    username: str
+    house: str
+
+# Usuario admin
 ADMIN_USER = "admin"
 ADMIN_PASS = "1234"
 
@@ -53,42 +59,25 @@ async def login(data: LoginData):
 @app.post("/add-question")
 async def add_question(question: Question):
     if os.path.exists(QUESTIONS_FILE):
-        with open(QUESTIONS_FILE, "r") as f:
+        with open(QUESTIONS_FILE, "r", encoding="utf-8") as f:
             questions = json.load(f)
     else:
         questions = []
 
-    questions.append(question.dict())
-    with open(QUESTIONS_FILE, "w") as f:
-        json.dump(questions, f, indent=4)
+    # Guardar las rutas completas de las imágenes
+    question_dict = question.dict()
+    question_dict["images"] = [f"/frontend/imagenes/{img}" for img in question_dict["images"]]
+
+    questions.append(question_dict)
+    with open(QUESTIONS_FILE, "w", encoding="utf-8") as f:
+        json.dump(questions, f, indent=4, ensure_ascii=False)
     return {"message": "Pregunta añadida correctamente"}
-class Resultado(BaseModel):
-    username: str
-    house: str
-
-@app.post("/submit")
-async def submit_result(data: Resultado):
-    # Cargar resultados previos
-    if os.path.exists(RESULTS_FILE):
-        with open(RESULTS_FILE, "r") as f:
-            results = json.load(f)
-    else:
-        results = []
-
-    # Añadir nuevo resultado
-    results.append(data.dict())
-
-    # Guardar
-    with open(RESULTS_FILE, "w") as f:
-        json.dump(results, f, indent=4)
-
-    return {"message": "Resultado guardado correctamente"}
 
 # Listar preguntas
 @app.get("/questions")
 async def get_questions():
     if os.path.exists(QUESTIONS_FILE):
-        with open(QUESTIONS_FILE, "r") as f:
+        with open(QUESTIONS_FILE, "r", encoding="utf-8") as f:
             questions = json.load(f)
     else:
         questions = []
@@ -98,20 +87,34 @@ async def get_questions():
 @app.delete("/questions/{index}")
 async def delete_question(index: int):
     if os.path.exists(QUESTIONS_FILE):
-        with open(QUESTIONS_FILE, "r") as f:
+        with open(QUESTIONS_FILE, "r", encoding="utf-8") as f:
             questions = json.load(f)
         if 0 <= index < len(questions):
             questions.pop(index)
-            with open(QUESTIONS_FILE, "w") as f:
-                json.dump(questions, f, indent=4)
+            with open(QUESTIONS_FILE, "w", encoding="utf-8") as f:
+                json.dump(questions, f, indent=4, ensure_ascii=False)
             return {"message": "Pregunta borrada correctamente"}
     return JSONResponse(status_code=404, content={"message": "Pregunta no encontrada"})
 
-
-# Endpoint para subir imagen
+# Subir imagen
 @app.post("/upload-image")
 async def upload_image(file: UploadFile = File(...)):
     file_path = os.path.join(IMAGES_DIR, file.filename)
     with open(file_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
     return {"filename": file.filename}
+
+# Guardar resultado
+@app.post("/submit")
+async def submit_result(data: Resultado):
+    if os.path.exists(RESULTS_FILE):
+        with open(RESULTS_FILE, "r", encoding="utf-8") as f:
+            results = json.load(f)
+    else:
+        results = []
+
+    results.append(data.dict())
+    with open(RESULTS_FILE, "w", encoding="utf-8") as f:
+        json.dump(results, f, indent=4, ensure_ascii=False)
+
+    return {"message": "Resultado guardado correctamente"}

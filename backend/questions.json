@@ -20,10 +20,10 @@
             }
         ],
         "images": [
-            "https://static.posters.cz/image/1300/149373.jpg",
-            "https://upload.wikimedia.org/wikipedia/en/1/16/Draco_Mal.JPG",
-            "https://contentful.harrypotter.com/usf1vwtuqyxm/t6GVMDanqSKGOKaCWi8oi/74b6816d9f913623419b98048ec87d25/LunaLovegood_WB_F5_LunaLovegoodPromoCloseUp_Promo_080615_Port.jpg?q=75&fm=jpg&w=2560",
-            "https://i.redd.it/cedric-diggory-embodies-the-phrase-young-and-beautiful-v0-43ffpfte2ofe1.jpg?width=736&format=pjpg&auto=webp&s=aeba3317cc4c139785c37648432a3f1277f6b581"
+            "/frontend/imagenes/149373.jpg",
+            "/frontend/imagenes/Draco_Mal.jpg",
+            "/frontend/imagenes/LunaLovegood_WB_F5_LunaLovegoodPromoCloseUp_Promo_080615_Port.jpg",
+            "/frontend/imagenes/cedric-diggory-embodies-the-phrase-young-and-beautiful-v0-43ffpfte2ofe1.jpg"
         ]
     }
 ]

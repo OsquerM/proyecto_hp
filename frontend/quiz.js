@@ -7,9 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const questionText = document.getElementById("question-text");
   const imagesGrid = document.querySelector(".images-grid");
   const optionsGrid = document.querySelector(".options-grid");
+  const houseImage = document.getElementById("house-image");
 
-  // Tus preguntas ya definidas
-  const questions = [
+  // Preguntas predeterminadas (no se borran nunca)
+  let questions = [
     {
       question: "¿Qué animal te llevarías a Hogwarts?",
       images: ["/frontend/imagenes/rata.jpg", "/frontend/imagenes/lechuza.jpg", "/frontend/imagenes/escarbato.jpg", "/frontend/imagenes/gato.jpg"],
@@ -92,6 +93,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   ];
 
+  // Cargar preguntas nuevas del backend (se añaden sin borrar las predeterminadas)
+  async function cargarPreguntasBackend() {
+    try {
+      const res = await fetch("http://127.0.0.1:8000/backend/questions");
+      if (!res.ok) throw new Error("No se pudieron cargar preguntas del backend");
+      const nuevas = await res.json();
+      nuevas.forEach(p => {
+        if (p.question && p.options && p.images) questions.push(p);
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   let currentQuestion = 0;
   const score = { Gryffindor: 0, Hufflepuff: 0, Ravenclaw: 0, Slytherin: 0 };
 
@@ -102,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
     imagesGrid.innerHTML = "";
     q.images.forEach(src => {
       const img = document.createElement("img");
-      img.src = src; // ruta ya completa
+      img.src = src;
       img.classList.add("img-fluid", "rounded");
       imagesGrid.appendChild(img);
     });
@@ -142,15 +157,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     resultHouse.textContent = winnerHouse;
 
-    // Imagen de la casa
-    const existingImg = document.getElementById("house-img");
-    if (existingImg) existingImg.remove();
-    const houseImage = document.createElement("img");
+    // Actualiza la imagen existente del resultado
     houseImage.src = `/frontend/imagenes/casas/${winnerHouse.toLowerCase()}.jpg`;
     houseImage.alt = winnerHouse;
-    houseImage.id = "house-img";
-    houseImage.classList.add("img-fluid", "mt-3");
-    resultContainer.appendChild(houseImage);
 
     // Enviar resultado al backend
     const usernameInput = document.getElementById("username");
@@ -166,16 +175,20 @@ document.addEventListener('DOMContentLoaded', () => {
     .catch(err => console.error("Error enviando resultado:", err));
   }
 
-  startBtn.addEventListener('click', () => {
+  // Inicio del quiz
+  startBtn.addEventListener('click', async () => {
+    await cargarPreguntasBackend(); // Añade las nuevas preguntas
     startContainer.classList.add('d-none');
     quizContainer.classList.remove('d-none');
+    currentQuestion = 0;
     showQuestion();
   });
 
+  // Reiniciar quiz
   document.getElementById("restart-btn").addEventListener("click", () => {
     currentQuestion = 0;
     for (let h in score) score[h] = 0;
     resultContainer.classList.add("d-none");
-    startContainer.classList.remove("d-none");
+    startContainer.classList.remove('d-none');
   });
 });
