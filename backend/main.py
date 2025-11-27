@@ -58,6 +58,27 @@ async def add_question(question: Question):
     with open(QUESTIONS_FILE, "w") as f:
         json.dump(questions, f, indent=4)
     return {"message": "Pregunta añadida correctamente"}
+class Resultado(BaseModel):
+    username: str
+    house: str
+
+@app.post("/submit")
+async def submit_result(data: Resultado):
+    # Cargar resultados previos
+    if os.path.exists(RESULTS_FILE):
+        with open(RESULTS_FILE, "r") as f:
+            results = json.load(f)
+    else:
+        results = []
+
+    # Añadir nuevo resultado
+    results.append(data.dict())
+
+    # Guardar
+    with open(RESULTS_FILE, "w") as f:
+        json.dump(results, f, indent=4)
+
+    return {"message": "Resultado guardado correctamente"}
 
 # Listar preguntas
 @app.get("/questions")

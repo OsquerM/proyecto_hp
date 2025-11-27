@@ -15,21 +15,52 @@
 <!-- Añadir pregunta -->
 <div class="mb-4">
   <form id="form-pregunta">
+
     <input type="text" id="texto-pregunta" class="form-control mb-2" placeholder="Texto de la pregunta" required>
+
+    <!-- Opciones -->
     <input type="text" id="opcion1-texto" class="form-control mb-1" placeholder="Opción 1" required>
     <input type="text" id="opcion1-casa" class="form-control mb-1" placeholder="Casa" required>
+
     <input type="text" id="opcion2-texto" class="form-control mb-1" placeholder="Opción 2" required>
     <input type="text" id="opcion2-casa" class="form-control mb-1" placeholder="Casa" required>
+
     <input type="text" id="opcion3-texto" class="form-control mb-1" placeholder="Opción 3" required>
     <input type="text" id="opcion3-casa" class="form-control mb-1" placeholder="Casa" required>
+
     <input type="text" id="opcion4-texto" class="form-control mb-1" placeholder="Opción 4" required>
     <input type="text" id="opcion4-casa" class="form-control mb-1" placeholder="Casa" required>
-    <input type="text" id="imagen1" class="form-control mb-1" placeholder="Imagen 1" required>
-    <input type="text" id="imagen2" class="form-control mb-1" placeholder="Imagen 2" required>
-    <input type="text" id="imagen3" class="form-control mb-1" placeholder="Imagen 3" required>
-    <input type="text" id="imagen4" class="form-control mb-1" placeholder="Imagen 4" required>
+
+    <hr class="border-light">
+
+    <!-- SUBIR IMÁGENES -->
+    <label class="mt-2">Imagen 1</label>
+    <div class="input-group mb-2">
+      <input type="text" id="imagen1" class="form-control" placeholder="URL imagen 1" required>
+      <input type="file" id="file1" class="form-control" accept="image/*">
+    </div>
+
+    <label>Imagen 2</label>
+    <div class="input-group mb-2">
+      <input type="text" id="imagen2" class="form-control" placeholder="URL imagen 2" required>
+      <input type="file" id="file2" class="form-control" accept="image/*">
+    </div>
+
+    <label>Imagen 3</label>
+    <div class="input-group mb-2">
+      <input type="text" id="imagen3" class="form-control" placeholder="URL imagen 3" required>
+      <input type="file" id="file3" class="form-control" accept="image/*">
+    </div>
+
+    <label>Imagen 4</label>
+    <div class="input-group mb-3">
+      <input type="text" id="imagen4" class="form-control" placeholder="URL imagen 4" required>
+      <input type="file" id="file4" class="form-control" accept="image/*">
+    </div>
+
     <button type="submit" class="btn btn-success mt-2">Añadir Pregunta</button>
   </form>
+
   <p id="mensaje-pregunta" class="text-success mt-2 d-none">Pregunta añadida correctamente!</p>
 </div>
 
