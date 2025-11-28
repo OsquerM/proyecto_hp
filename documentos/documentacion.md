@@ -216,3 +216,4 @@ server {
 * Demostración en vivo del cuestionario y resultados.
 * Explicación del backend y frontend.
 * Responder preguntas sobre arquitectura y decisiones técnicas.
+<!-- Probando el Jira -->
