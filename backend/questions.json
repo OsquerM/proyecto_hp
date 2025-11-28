@@ -1,6 +1,6 @@
 [
     {
-        "question": "En una guerra, \u00bfQui\u00e9n ser\u00eda tu aliado?",
+        "question": "En una guerra, ¿Quién sería tu aliado?",
         "options": [
             {
                 "text": "Hermione Granger",
@@ -20,10 +20,37 @@
             }
         ],
         "images": [
-            "/frontend/imagenes/149373.jpg",
-            "/frontend/imagenes/Draco_Mal.jpg",
-            "/frontend/imagenes/LunaLovegood_WB_F5_LunaLovegoodPromoCloseUp_Promo_080615_Port.jpg",
-            "/frontend/imagenes/cedric-diggory-embodies-the-phrase-young-and-beautiful-v0-43ffpfte2ofe1.jpg"
+            "/frontend/imagenes/hermione.gif",
+            "/frontend/imagenes/malfoy-tom.gif",
+            "/frontend/imagenes/6e2118d256235e031b153c498ef2ece9.gif",
+            "/frontend/imagenes/a799b508086795d7e08019449a691627.gif"
+        ]
+    },
+    {
+        "question": "¿Qué prueba elegirías del torneo de los tres magos?",
+        "options": [
+            {
+                "text": "Enfrentarse a un dragón",
+                "house": "Gryffindor"
+            },
+            {
+                "text": "Recorrer el laberinto",
+                "house": "Slytherin"
+            },
+            {
+                "text": "Nadar en el lago negro ",
+                "house": "Ravenclaw"
+            },
+            {
+                "text": "Cocinar una super receta ",
+                "house": "Hufflepuff"
+            }
+        ],
+        "images": [
+            "/frontend/imagenes/gryffindor.gif",
+            "/frontend/imagenes/slytherin.gif",
+            "/frontend/imagenes/ravenclaw.gif",
+            "/frontend/imagenes/huffle.gif"
         ]
     }
 ]

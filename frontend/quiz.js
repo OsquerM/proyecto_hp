@@ -3,17 +3,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const startContainer = document.getElementById('start-container');
   const quizContainer = document.getElementById('quiz-container');
   const resultContainer = document.getElementById('result-container');
-  const resultHouse = document.getElementById('result-house');
+  const resultHouse = document.getElementById("result-house");
   const questionText = document.getElementById("question-text");
   const imagesGrid = document.querySelector(".images-grid");
   const optionsGrid = document.querySelector(".options-grid");
   const houseImage = document.getElementById("house-image");
 
-  // Preguntas predeterminadas (no se borran nunca)
+  // Preguntas predeterminadas
   let questions = [
     {
       question: "¿Qué animal te llevarías a Hogwarts?",
-      images: ["/frontend/imagenes/rata.jpg", "/frontend/imagenes/lechuza.jpg", "/frontend/imagenes/escarbato.jpg", "/frontend/imagenes/gato.jpg"],
+      images: ["rata.jpg", "lechuza.jpg", "escarbato.jpg", "gato.jpg"],
       options: [
         { text: "Rata", house: "Slytherin" },
         { text: "Lechuza", house: "Ravenclaw" },
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       question: "¿Qué cualidad valoras más?",
-      images: ["/frontend/imagenes/valentia.jpg", "/frontend/imagenes/lealtad.jpg", "/frontend/imagenes/sabiduria.jpg", "/frontend/imagenes/astucia.png"],
+      images: ["valentia.jpg", "lealtad.jpg", "sabiduria.jpg", "astucia.png"],
       options: [
         { text: "Valentía", house: "Gryffindor" },
         { text: "Lealtad", house: "Hufflepuff" },
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       question: "¿Qué hechizo usarías?",
-      images: ["/frontend/imagenes/expelliarmus.gif", "/frontend/imagenes/avada.gif", "/frontend/imagenes/protego.gif", "/frontend/imagenes/immobulus.gif"],
+      images: ["expelliarmus.gif", "avada.gif", "protego.gif", "immobulus.gif"],
       options: [
         { text: "Expelliarmus", house: "Gryffindor" },
         { text: "Avada Kedavra", house: "Slytherin" },
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       question: "¿Qué objeto utilizarías?",
-      images: ["/frontend/imagenes/recordadora.gif", "/frontend/imagenes/escoba.gif", "/frontend/imagenes/mapa.gif", "/frontend/imagenes/gira.gif"],
+      images: ["recordadora.gif", "escoba.gif", "mapa.gif", "gira.gif"],
       options: [
         { text: "Recordadora", house: "Gryffindor" },
         { text: "Escoba", house: "Slytherin" },
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       question: "¿Qué clase es tu preferida?",
-      images: ["/frontend/imagenes/vuelo.gif", "/frontend/imagenes/dcao.gif", "/frontend/imagenes/herbologia.gif", "/frontend/imagenes/pociones.gif"],
+      images: ["vuelo.gif", "dcao.gif", "herbologia.gif", "pociones.gif"],
       options: [
         { text: "Vuelo", house: "Gryffindor" },
         { text: "Defensa Contra las Artes Oscuras", house: "Slytherin" },
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       question: "¿De qué está hecha tu varita?",
-      images: ["/frontend/imagenes/sauco.jpg", "/frontend/imagenes/acebo.jpg", "/frontend/imagenes/vid.jpg", "/frontend/imagenes/draco.jpg"],
+      images: ["sauco.jpg", "acebo.jpg", "vid.jpg", "draco.jpg"],
       options: [
         { text: "Sauco", house: "Gryffindor" },
         { text: "Acebo", house: "Slytherin" },
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       question: "¿A qué preferirías enfrentarte?",
-      images: ["/frontend/imagenes/troll.gif", "/frontend/imagenes/dementor.gif", "/frontend/imagenes/sirena.gif", "/frontend/imagenes/dragon.gif"],
+      images: ["troll.gif", "dementor.gif", "sirena.gif", "dragon.gif"],
       options: [
         { text: "Troll", house: "Gryffindor" },
         { text: "Dementor", house: "Slytherin" },
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       question: "Elige un transporte mágico",
-      images: ["/frontend/imagenes/escoba1.gif", "/frontend/imagenes/coche.gif", "/frontend/imagenes/red.gif", "/frontend/imagenes/aparicion.gif"],
+      images: ["escoba1.gif", "coche.gif", "red.gif", "aparicion.gif"],
       options: [
         { text: "Escoba", house: "Gryffindor" },
         { text: "Coche Volador", house: "Slytherin" },
@@ -93,8 +93,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   ];
 
-  // Cargar preguntas nuevas del backend (se añaden sin borrar las predeterminadas)
+  let currentQuestion = 0;
+  const score = { Gryffindor: 0, Hufflepuff: 0, Ravenclaw: 0, Slytherin: 0 };
+  let backendLoaded = false;
+
   async function cargarPreguntasBackend() {
+    if (backendLoaded) return;
     try {
       const res = await fetch("http://127.0.0.1:8000/backend/questions");
       if (!res.ok) throw new Error("No se pudieron cargar preguntas del backend");
@@ -102,13 +106,11 @@ document.addEventListener('DOMContentLoaded', () => {
       nuevas.forEach(p => {
         if (p.question && p.options && p.images) questions.push(p);
       });
+      backendLoaded = true;
     } catch (err) {
-      console.error(err);
+      console.error("Error cargando preguntas del backend:", err);
     }
   }
-
-  let currentQuestion = 0;
-  const score = { Gryffindor: 0, Hufflepuff: 0, Ravenclaw: 0, Slytherin: 0 };
 
   function showQuestion() {
     const q = questions[currentQuestion];
@@ -117,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
     imagesGrid.innerHTML = "";
     q.images.forEach(src => {
       const img = document.createElement("img");
-      img.src = src;
+      img.src = src.startsWith("/frontend/imagenes/") ? src : `/frontend/imagenes/${src}`;
       img.classList.add("img-fluid", "rounded");
       imagesGrid.appendChild(img);
     });
@@ -156,12 +158,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     resultHouse.textContent = winnerHouse;
-
-    // Actualiza la imagen existente del resultado
     houseImage.src = `/frontend/imagenes/casas/${winnerHouse.toLowerCase()}.jpg`;
     houseImage.alt = winnerHouse;
 
-    // Enviar resultado al backend
     const usernameInput = document.getElementById("username");
     const username = usernameInput ? usernameInput.value || "Anonimo" : "Anonimo";
 
@@ -175,16 +174,14 @@ document.addEventListener('DOMContentLoaded', () => {
     .catch(err => console.error("Error enviando resultado:", err));
   }
 
-  // Inicio del quiz
   startBtn.addEventListener('click', async () => {
-    await cargarPreguntasBackend(); // Añade las nuevas preguntas
+    await cargarPreguntasBackend();
     startContainer.classList.add('d-none');
     quizContainer.classList.remove('d-none');
     currentQuestion = 0;
     showQuestion();
   });
 
-  // Reiniciar quiz
   document.getElementById("restart-btn").addEventListener("click", () => {
     currentQuestion = 0;
     for (let h in score) score[h] = 0;
