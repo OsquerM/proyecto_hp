@@ -57,21 +57,21 @@ pip install fastapi uvicorn sqlalchemy pydantic passlib python-jose[cryptography
 * Diseño responsivo para móviles y tablets.
 
 
-## 7. Documentación y presentación
+## 4. Documentación y presentación
 
-### 7.1 Manual Técnico
+### 4.1 Manual Técnico
 
 * Explicar arquitectura del sistema y decisiones técnicas.
 * Incluir diagramas de base de datos y flujo de datos.
 * Detallar configuración de Docker y Nginx.
 
-### 7.2 Manual de Usuario
+### 4.2 Manual de Usuario
 
 * Guía paso a paso para registrarse, hacer el quiz y ver resultados.
 * Capturas de pantalla y FAQ.
 * Solución de problemas comunes.
 
-### 7.3 Presentación del proyecto
+### 4.3 Presentación del proyecto
 
 * Demostración en vivo del cuestionario y resultados.
 * Explicación del backend y frontend.
