@@ -1,25 +1,26 @@
-A. Historias de Usuario Técnicas
+# Historias de Usuario Técnicas
 
-HU-01: Añadir Pregunta (Admin)
+## HU-01: Añadir Pregunta (Admin)
+- **Evento:** submit en `#form-pregunta`  
+- **Acción:** Se crea un objeto `Question` y se guarda en `questions.json`  
+- **DOM:** Se añade una fila en `#tabla-preguntas` con pregunta, opciones e imágenes  
 
-Evento: submit en #form-pregunta
+---
 
-Acción: Se crea un objeto Question y se guarda en questions.json
+## HU-02: Borrar Pregunta (Admin)
+- **Evento:** Click en botón **Borrar** de la fila  
+- **Acción:** Se elimina la pregunta de `questions.json`  
+- **DOM:** Se elimina la fila correspondiente  
 
-DOM: Se añade una fila en #tabla-preguntas con pregunta, opciones e imágenes
+---
 
-HU-02: Borrar Pregunta (Admin)
+## HU-03: Ver Preguntas (Admin/Usuario)
+- **Evento:** Carga de `panel.html`  
+- **Acción:** Se leen las preguntas de `questions.json`  
+- **DOM:** Se renderizan todas las filas de la tabla con opciones e imágenes  
 
-Evento: Click en botón Borrar de la fila
 
-Acción: Se elimina la pregunta de questions.json
 
-DOM: Se elimina la fila correspondiente
-
-HU-03: Ver Preguntas (Admin/Usuario)
-
-Evento: Carga de panel.html
-
-Acción: Se leen las preguntas de questions.json
-
-DOM: Se renderizan todas las filas de la tabla con opciones e imágenes
+## HU-04: Usuario
+- **Evento** Introducir el nombre para registrar el nombre
+- **Acción** Se guarda en el json (Nombre/Casa seleccionada)
