@@ -4,12 +4,12 @@
 
 ### QuizManager
 - **Atributos:**
-  - questions[]
+  - preguntas[]
 - **Métodos:**
-  - addQuestion()
-  - deleteQuestion()
-  - loadQuestions()
-  - renderQuestionsTable()
+  - añadirPregunta()
+  - borrarPregunta()
+  - recargarPregunta()
+  - renderizarPreguntaEnLaTabla()
 - **Relaciones:**
   - Contiene `Question` (Agregación)
 
@@ -17,9 +17,9 @@
 
 ### Question
 - **Atributos:**
-  - text
-  - options[]
-  - images[]
+  - texto
+  - opciones[]
+  - imagenes[]
 - **Métodos:**
   - constructor()
   - renderHTML()
@@ -30,7 +30,7 @@
 
 ### Option
 - **Atributos:**
-  - text
-  - house
+  - texto
+  - casa
 - **Métodos:**
   - constructor()
