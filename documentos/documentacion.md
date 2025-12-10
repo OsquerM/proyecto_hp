@@ -28,7 +28,7 @@ pip install fastapi uvicorn sqlalchemy pydantic passlib python-jose[cryptography
 
 ### 2.4 Configurar base de datos
 
-* Usar PostgreSQL o MySQL.
+* Usar MongoDB o MySQL.
 * Crear tablas `usuarios` y `resultados`.
 * Conectar con SQLAlchemy en `database.py`.
 
