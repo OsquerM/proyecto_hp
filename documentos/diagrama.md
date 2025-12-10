@@ -3,23 +3,23 @@
 ## Entidades
 
 **Admin**
-- username
+- usuario
 - email
 
 **Usuario**
-- username
+- usuario
 
 **Pregunta**
-- question
-- images[]
+- pregunta
+- imagenes[]
 
 **Opción**
-- text
-- house
+- texto
+- casa
 
 **Resultado**
-- username
-- house
+- usuario
+- casa
 
 **Imagen**
 - url
