@@ -37,5 +37,5 @@
 - **Pregunta 1:N Imagen**  
   Una pregunta puede tener muchas imágenes; cada imagen pertenece a una pregunta.
 
-- **Usuario 1:N Resultado**  
+- **Usuario 1:1 Resultado**  
   Un usuario puede tener muchos resultados; cada resultado pertenece a un usuario.
